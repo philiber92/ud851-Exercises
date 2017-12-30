@@ -19,4 +19,7 @@
     <string name="error_message">
         Failed to get results. Please try again.
     </string>
+    <string name="empty_query">
+        Insert a query, please!
+    </string>
 </resources>
