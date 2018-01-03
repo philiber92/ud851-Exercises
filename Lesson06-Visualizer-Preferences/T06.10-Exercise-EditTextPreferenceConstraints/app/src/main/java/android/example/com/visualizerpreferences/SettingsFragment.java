@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 // TODO (1) Implement OnPreferenceChangeListener
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -98,6 +98,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onCreate(savedInstanceState);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().findPreference(getString(R.string.pref_size_key))
+                .setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -105,5 +107,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onDestroy();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Toast error = Toast.makeText(getContext(), R.string.pref_scale_error, Toast.LENGTH_SHORT);
+
+        String text = ((String) newValue).trim();
+
+        try {
+            float number = Float.parseFloat(text);
+
+            if(number > 0.0 && number <= 3.0) {
+                return true;
+            }
+        } catch (Exception e) {}
+
+        error.show();
+        return false;
     }
 }
