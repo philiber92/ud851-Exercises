@@ -18,5 +18,6 @@
     <string name="low_priority">Low</string>
 
     <string name="add_button">Add</string>
+    <string name="insert_error">Unable to add new data!</string>
 
 </resources>
